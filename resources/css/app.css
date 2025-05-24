@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap");
+
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+@layer base {
+    .themeFont {
+        font-family: "Jost", sans-serif;
+    }
+
+    body {
+        /* background: #f4f7fe; */
+        background: #fafafb;
+    }
+    /* .active-class{
+        background:#eaf3fd !important;
+        /* background:#1447e6; */
+    /* color: #1447e6; */
+    /* } */
+    .active-class {
+        background: #eaf3fd !important;
+        color: #1447e6 !important;
+    }
+    
+}
