@@ -9,7 +9,8 @@
                 <li class="w-full flex">
                     <a href='/'
                         class='w-full p-2 flex items-center rounded capitalize gap-2 
-                        ease duration-300 text-gray-500 hover:bg-[#eaf3fd] hover:text-[#1447e6] active-class' aria-current="page">
+                        ease duration-300 text-gray-500 hover:bg-[#eaf3fd] hover:text-[#1447e6] active-class'
+                        aria-current="page">
                         <span class="material-icons material-symbols-rounded !text-[20px]">
                             grid_view
                         </span>
@@ -72,7 +73,7 @@
                         class='side-nav-link w-full p-2 flex items-center rounded capitalize gap-2 ease duration-300 text-gray-500 hover:bg-[#eaf3fd] hover:text-[#1447e6]'>
                         <span class="material-icons material-symbols-rounded !text-[20px]">
                             receipt_long_off
-                        </span> 
+                        </span>
                         <p class="themeFont text-[14px] font-normal">Return Bill</p>
                     </a>
                 </li>
@@ -143,13 +144,16 @@
                 <li class="w-full flex text-gray-400 mt-2 uppercase themeFont text-sm font-semibold px-2">Sign Out
                 </li>
                 <li class="w-full flex">
-                    <a href='#'
-                        class='w-full p-2 flex items-center rounded capitalize gap-2 ease duration-300 text-gray-500 bg-[#1447e6] text-white'>
-                        <span class="material-icons material-symbols-rounded !text-[20px]">
-                            logout
-                        </span>
-                        <p class="themeFont text-[14px] font-normal">Logout</p>
-                    </a>
+                    <form action="{{route('logout')}}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" href='#'
+                            class='w-full p-2 flex items-center rounded capitalize gap-2 ease duration-300 text-gray-500 bg-[#1447e6] text-white'>
+                            <span class="material-icons material-symbols-rounded !text-[20px] cursor-pointer">
+                                logout
+                            </span>
+                            <p class="themeFont text-[14px] font-normal">Logout</p>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </ul>

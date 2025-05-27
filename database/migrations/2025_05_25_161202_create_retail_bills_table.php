@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('retail_bills', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('phone', 15);
+            $table->string('email')->nullable();
+            $table->date('bill_date');
+            $table->integer('discount')->default(0);
+            $table->decimal('deposit_amount', 10, 2)->default(0);
+            $table->json('items_data');
+            $table->decimal('custom_price', 10, 2)->default(0);
+            $table->decimal('bill', 10, 2)->default(0);
             $table->timestamps();
         });
     }
