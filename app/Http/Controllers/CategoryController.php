@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
     {
         //
 
-        return view('category');
+        return view('category.category');
     }
 
     /**
@@ -22,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('add-category');
+        return view('category.add-category');
     }
 
     /**
@@ -30,7 +31,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->role->name != 'admin') {
+            return back()->with('major_error', 'Only Admin can Add categories.');
+        }
+
+        $data = $request->validate([
+            'name' => 'required|string|min:3|max:100|unique:categories,name',
+            'p_category' => 'nullable|integer',
+            'description' => 'nullable|string|max:300',
+            'cat_image' => 'nullable|mimes:png,jpeg,webp|max:100' // size in KB
+
+        ]);
     }
 
     /**
@@ -57,7 +68,7 @@ class CategoryController extends Controller
     {
         //
 
-         
+
     }
 
     /**

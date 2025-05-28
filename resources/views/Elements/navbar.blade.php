@@ -1,6 +1,7 @@
 <div class="w-full flex items-center justify-between py-3 px-10 bg-white">
     <div class="w-1/5 flex gap-3 items-center">
-        <button class="w-10 h-10 flex items-center justify-center rounded cursor-pointer text-white bg-[#1447e6]" id="sideBar_toggle_btn">
+        <button class="w-10 h-10 flex items-center justify-center rounded cursor-pointer text-white bg-[#1447e6]"
+            id="sideBar_toggle_btn">
             <span class="material-icons material-symbols-outlined">
                 menu_open
             </span>
@@ -12,7 +13,7 @@
             </span>
 
             <!-- Input Field -->
-            <input type="search" placeholder="Search..."
+            <input type="search" value="{{ Auth::user()->role->name }}" placeholder="Search..."
                 class="w-full themeFont pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 text-sm rounded-sm focus:outline-none" />
         </form>
     </div>

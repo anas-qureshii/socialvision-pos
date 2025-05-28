@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'show'])->name('login');
     Route::post('/loggedin', [AuthController::class, 'login'])->name('loggedin');
 });
-Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware([validUser::class]);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware([validUser::class]);
 
 // Route::view('/category','category');
 
