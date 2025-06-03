@@ -7,6 +7,14 @@
 
 @section('content')
     <div class="w-full bg-white shadow shadow-gray-200 flex flex-col rounded p-2">
+        @session('success')
+            <div class="w-full">
+                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                    role="alert">
+                    <span class="font-medium">Success alert!</span> Successfully Added the category
+                </div>
+            </div>
+        @endsession
         <div class="flex w-full">
             <h6 class="p-2"><a href="/" class="text-[#1447e6] themeFont text-lg">Home</a> / <span
                     class="themeFont text-gray-400 text-lg">category</span></h6>
@@ -25,6 +33,9 @@
                                 class="text-red-500">*</span></label>
                         <input type="text" placeholder="Title" name="name"
                             class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                        @error('name')
+                            <p class="text-red-600 text-[12px] themeFont">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="w-full rounded overflow-hidden flex flex-col gap-1 mb-4">
                         <label class="block text-sm font-medium text-gray-700 themeFont">Category: <span
@@ -32,7 +43,13 @@
                         <select name="p_category" id=""
                             class="mt-1 w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
                             <option value="">select categories</option>
+                            @foreach ($data as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
                         </select>
+                        @error('p_category')
+                            <p class="text-red-600 text-[12px] themeFont">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="w-full flex flex-wrap justify-between mb-4">
                         <label class="block text-sm font-medium text-gray-700 themeFont">Description: <span
@@ -40,8 +57,14 @@
 
                         <textarea placeholder="Enter Note" name="description" class="mt-2 w-full border border-gray-300 themeFont rounded p-3"
                             rows="5"></textarea>
+                            @error('description')
+                            <p class="text-red-600 text-[12px] themeFont">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="w-full flex flex-col gap-2 relative bg-gray-100 rounded p-3 mb-4" id='dropzone'>
+                        @error('image')
+                            <p class="text-red-600 text-[12px] themeFont">{{ $message }}</p>
+                        @enderror
                         <div class="w-full border-2 border-dashed border-gray-400 bg-gray-50 flex items-center justify-center p-4 relative ease-linear duration-300 hover:border-blue-200"
                             id="cus_dropzone">
                             <div class='py-8 px-3 text-sm flex themeFont gap-1'>
@@ -56,6 +79,7 @@
                         </div>
                         <input type="file" name="cat_image" id="drag_file" hidden>
                         <div id="appendDropFile" class="flex flex-wrap items-center gap-3">
+
                             {{-- <div class="w-16 h-16 rounded-lg bg-gray-500 relative">
                             <img class="w-full h-full object-cover rounded-lg" src="{{ asset('assets/products/p-1.webp') }}"
                                 alt="">
