@@ -16,71 +16,149 @@
         {{-- page heading --}}
         <h2 class="themeFont text-3xl capitalize mt-4 font-semibold px-2 ">Add Products</h2>
 
+
         <form class="w-full py-6 mt-6 border-t border-t-gray-100 flex flex-col items-center justify-center" method="POST"
             action="{{ route('product.store') }}" enctype="multipart/form-data">
-
+            @csrf
+            @session('warning')
+                <div class="w-full p-2">
+                    <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-100 dark:bg-gray-800 dark:text-yellow-300"
+                        role="alert">
+                        {{ session('warning') }}
+                    </div>
+                </div>
+            @endsession
+            @session('success')
+             <div class="w-full p-2">
+                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                    role="alert">
+                    <span class="font-medium">Success alert!</span> {{session('success')}}
+                </div>
+            </div>
+        @endsession
             <div class="w-full flex flex-wrap justify-between mt-2 px-4">
                 <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">Title: <span
                             class="text-red-500">*</span></label>
-                    <input type="text" placeholder="Title"
+                    <input type="text" placeholder="Title" name="name"
                         class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('name')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
                 <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">Price: <span
                             class="text-red-500">*</span></label>
-                    <input type="text" placeholder="price"
-                        class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <input type="text" placeholder="price" name="price"
+                        class=" numbering-inp mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+
+                        @error('price')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
                 <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
-                    <label class="block text-sm font-medium text-gray-700 themeFont">Retail Price: <span
+                    <label class="block text-sm font-medium text-gray-700 themeFont">Roll Price: <span
                             class="text-red-500">*</span></label>
-                    <input type="text" placeholder="Retail price"
-                        class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <input type="text" placeholder="price" name="rollprice"
+                        class="numbering-inp mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+
+                        @error('RollPrice')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
+
 
             </div>
             <div class="w-full flex flex-wrap justify-between mt-8 px-4">
                 <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
+                    <label class="block text-sm font-medium text-gray-700 themeFont">Retail Price: <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" placeholder="Retail price" name="retailPrice"
+                        class="numbering-inp mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('retailPrice')
+                            {{ $message }}
+                        @enderror
+                    </p>
+                </div>
+                <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">Wholesale Price: <span
                             class="text-red-500">*</span></label>
-                    <input type="text" placeholder="Wholesale Price"
-                        class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <input type="text" placeholder="Wholesale Price" name="wholesalePrice"
+                        class="mt-1 numbering-inp w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('wholesalePrice')
+                            {{ $message }}
+                        @enderror
+                    </p>
+
                 </div>
                 <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">stock (Quantity): <span
                             class="text-red-500">*</span></label>
-                    <input type="text" placeholder="stock (Quantity)"
-                        class="mt-1  w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <input type="text" placeholder="stock (Quantity)" name="stock"
+                        class="mt-1 numbering-inp w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('stock')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
-                <div class="w-[33%] rounded overflow-hidden flex flex-col gap-1">
+
+
+            </div>
+
+            <div class="w-full flex flex-wrap justify-between mt-8 px-4">
+                <div class="w-full rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">Category: <span
                             class="text-red-500">*</span></label>
-                    <select name="" id=""
+                    <select name="category" id=""
                         class="mt-1 w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
                         <option value="">select categories</option>
                         @foreach ($category as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('category')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
-
             </div>
-
             <div class="w-full flex flex-wrap justify-between mt-8 px-4">
-                <div class="w-full rounded overflow-hidden">
+                <div class="w-full rounded overflow-hidden flex flex-col gap-1">
                     <label class="block text-sm font-medium text-gray-700 themeFont">Product Type: <span
                             class="text-red-500">*</span></label>
-                    <select name="" id="productType"
+                    <select name="product_type" id="productType"
                         class="mt-2 w-full border border-gray-300 duration-200 rounded p-3 themeFont focus:outline-none  focus:border-[#1447e6]">
                         <option value="">select product type</option>
                         <option value="0">simple product</option>
                         <option value="1">Attribute product</option>
                         <option value="2">variation Product</option>
                     </select>
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('product_type')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
                 <input type="text" name="attribute_data" id="attribute_data_inp" hidden>
+                <input type="text" name="variation_data" id="variation_data_inp" hidden>
+
             </div>
+            @error('variations')
+                <div class="w-full flex flex-wrap justify-between mt-8 px-4">
+                    {{ $message }}
+                </div>
+            @enderror
+
 
             <div class="w-full flex flex-wrap justify-between mt-4 px-4 hidden" id="main-var-data">
                 <div class="flex items-center justify-center h-[100px] w-full hidden">
@@ -105,7 +183,7 @@
 
 
                     {{-- claude variation ends here --}}
-                    
+
 
 
                 </div>
@@ -118,12 +196,19 @@
                     <label class="block text-sm font-medium text-gray-700 themeFont">Description: <span
                             class="text-red-500">*</span></label>
 
-                    <textarea placeholder="Enter Note" class="mt-2 w-full border border-gray-300 themeFont rounded p-3"></textarea>
+                    <textarea placeholder="Enter Note" name="description"
+                        class="mt-2 w-full border border-gray-300 themeFont rounded p-3"></textarea>
+                    <p class="text-sm text-red-400 mt-1">
+                        @error('description')
+                            {{ $message }}
+                        @enderror
+                    </p>
                 </div>
             </div>
             <div class="w-full flex flex-wrap justify-between mt-4 px-4">
                 <label class="block text-sm font-medium text-gray-700 mb-4 themeFont">Upload Files: <span
                         class="text-red-500">*</span></label>
+
                 <div class="w-full flex flex-col gap-2 relative bg-gray-100 rounded p-3" id='dropzone'>
                     <div class="w-full border-2 border-dashed border-gray-200 bg-gray-50 flex items-center justify-center p-4 relative ease-linear duration-300 hover:border-blue-200"
                         id="cus_dropzone">
@@ -137,7 +222,7 @@
                             </p>
                         </div>
                     </div>
-                    <input type="file" name="" id="drag_file" hidden>
+                    <input type="file" name="file" id="drag_file" hidden>
                     <div id="appendDropFile" class="flex flex-wrap items-center gap-3">
                         {{-- <div class="w-16 h-16 rounded-lg bg-gray-500 relative">
                             <img class="w-full h-full object-cover rounded-lg" src="{{ asset('assets/products/p-1.webp') }}"
@@ -152,6 +237,11 @@
                     </div>
                     <div class="w-full h-full bg-blue-700 opacity-40 absolute top-0 left-0 hidden" id="overlay"></div>
                 </div>
+                <p class="text-sm text-red-400 mt-1">
+                    @error('file')
+                        {{ $message }}
+                    @enderror
+                </p>
             </div>
             <div class="w-full flex justify-start mt-4 p-4">
                 <button

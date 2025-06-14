@@ -1,46 +1,68 @@
-const productType = document.getElementById("productType");
+window.addEventListener("DOMContentLoaded", (e) => {
+    const productType = document.getElementById("productType");
+    let numberingInp = document.getElementsByClassName("numbering-inp");
 
-if (productType) {
-    productType.addEventListener("change", (e) => {
-        const atCon = document.getElementById("attr-container");
-        if (atCon) {
-            console.log(atCon);
-            const confirmation = confirm(
-                "By switching options, you may lose data. Continue?"
-            );
-            if (confirmation) {
-                atCon.remove();
-                attributes_data = [];
-                return;
-            }
-        }
+    function inputValidator(itm) {
+        itm.addEventListener("input", (e) => {
+            let val = e.target.value;
 
-        const val = parseInt(e.target.value);
-        if (val <= 0) return;
+            // Allow only digits and one decimal point, and limit to 2 decimal places
+            val = val.replace(/[^0-9.]/g, ""); // Remove non-numeric except .
+            val = val.replace(/^(\d*\.\d{0,2})\d*$/, "$1"); // Allow max 2 decimal places
 
-        const mainContainer = document.getElementById("main-var-data");
-        mainContainer.classList.remove("hidden");
-
-        const addAttr = document.getElementById("add_attrs");
-        let attributes_data = [];
-
-        addAttr.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const varDataP = document.getElementById("attribute-data");
-            if (document.getElementById("attr-container")) {
-                alert("attribute div is already added");
-                return;
+            // Prevent multiple decimal points
+            const parts = val.split(".");
+            if (parts.length > 2) {
+                val = parts[0] + "." + parts[1]; // Keep only the first decimal
             }
 
-            const attrDiv = document.createElement("div");
-            attrDiv.setAttribute(
-                "class",
-                "bg-gray-50 border border-gray-200 p-4 rounded-lg my-4"
-            );
-            attrDiv.setAttribute("id", "attr-container");
-            attrDiv.innerHTML = `
+            e.target.value = val;
+        });
+    }
+    Array.from(numberingInp).forEach((itm) => {
+        inputValidator(itm);
+    });
+
+    if (productType) {
+        productType.addEventListener("change", (e) => {
+            const atCon = document.getElementById("attr-container");
+            if (atCon) {
+                const confirmation = confirm(
+                    "By switching options, you may lose data. Continue?"
+                );
+                if (confirmation) {
+                    atCon.remove();
+                    attributes_data = [];
+                    return;
+                }
+            }
+
+            const val = parseInt(e.target.value);
+            if (val <= 0) return;
+
+            const mainContainer = document.getElementById("main-var-data");
+            mainContainer.classList.remove("hidden");
+
+            const addAttr = document.getElementById("add_attrs");
+            let attributes_data = [];
+
+            addAttr.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const varDataP = document.getElementById("attribute-data"); // container for appending attributes fields
+                if (document.getElementById("attr-container")) {
+                    alert("attribute div is already added");
+                    return;
+                }
+
+                const attrDiv = document.createElement("div");
+                attrDiv.setAttribute(
+                    "class",
+                    "bg-gray-50 border border-gray-200 p-4 rounded-lg my-4"
+                );
+                attrDiv.setAttribute("id", "attr-container");
+                attrDiv.innerHTML = `
                 <h3 class="text-lg font-semibold mb-3 themeFont">Product Attributes</h3>
                 <div class="flex flex-wrap gap-4 mt-4 main-attr-div">
                     <div class="flex-1 min-w-[200px]">
@@ -62,88 +84,88 @@ if (productType) {
                     </svg>
                     Add
                 </button>`;
-            varDataP.append(attrDiv);
+                varDataP.append(attrDiv);
 
-            const attrTitle = document.getElementById("attr-name");
-            const attrValues = document.getElementById("attr-vals");
-            const addAttribute = document.getElementById("add_attr");
+                const attrTitle = document.getElementById("attr-name");
+                const attrValues = document.getElementById("attr-vals");
+                const addAttribute = document.getElementById("add_attr");
 
-            const preventEnter = (e) => {
-                if (e.key === "Enter") e.preventDefault();
-            };
+                const preventEnter = (e) => {
+                    if (e.key === "Enter") e.preventDefault();
+                };
 
-            [attrTitle, attrValues].forEach((el) =>
-                el.addEventListener("keydown", preventEnter)
-            );
+                [attrTitle, attrValues].forEach((el) =>
+                    el.addEventListener("keydown", preventEnter)
+                );
 
-            addAttribute.addEventListener("click", () => {
-                const attrTVal = attrTitle.value.trim();
-                const attrVVal = attrValues.value.trim();
-                const regx = /^[a-zA-Z0-9, ]*$/;
+                addAttribute.addEventListener("click", () => {
+                    const attrTVal = attrTitle.value.trim();
+                    const attrVVal = attrValues.value.trim();
+                    const regx = /^[a-zA-Z0-9, ]*$/;
 
-                if (!attrTVal || !attrVVal) {
-                    alert(
-                        "It is important to enter Attribute Name And Attribute Value before adding"
+                    if (!attrTVal || !attrVVal) {
+                        alert(
+                            "It is important to enter Attribute Name And Attribute Value before adding"
+                        );
+                        return;
+                    }
+
+                    if (!regx.test(attrTVal) || !regx.test(attrVVal)) {
+                        alert(
+                            "Special characters are not allowed in attribute names or values"
+                        );
+                        return;
+                    }
+
+                    const attrOpts = attrVVal
+                        .split(",")
+                        .map((v) => v.trim())
+                        .filter(Boolean);
+                    const keys = attributes_data.map(
+                        (obj) => Object.keys(obj)[0]
                     );
-                    return;
-                }
 
-                if (!regx.test(attrTVal) || !regx.test(attrVVal)) {
-                    alert(
-                        "Special characters are not allowed in attribute names or values"
-                    );
-                    return;
-                }
+                    if (keys.includes(attrTVal)) {
+                        alert(`The attribute ${attrTVal} is already present`);
+                        return;
+                    }
 
-                const attrOpts = attrVVal
-                    .split(",")
-                    .map((v) => v.trim())
-                    .filter(Boolean);
-                const keys = attributes_data.map((obj) => Object.keys(obj)[0]);
-
-                if (keys.includes(attrTVal)) {
-                    alert(`The attribute ${attrTVal} is already present`);
-                    return;
-                }
-
-                attributes_data.push({ [attrTVal]: attrOpts });
-                let makeVariationBtnHtml = `<button 
+                    attributes_data.push({ [attrTVal]: attrOpts });
+                    let makeVariationBtnHtml = `<button 
                         class="bg-[#1447e6] text-white p-3 px-4 rounded-md themeFont text-lg hover:bg-blue-600
                          ease-linear duration-200 cursor-pointer" id="make-Variations" type="button">
                             Make Variations
                         </button>`;
 
-                // Create attributes container if not exists
-                if (!document.getElementById("attributes-container")) {
-                    const attrDataWrapper = document.createElement("div");
-                    attrDataWrapper.setAttribute(
-                        "class",
-                        "w-full flex flex-col items-start gap-4 pt-4"
-                    );
-                    attrDataWrapper.setAttribute("id", "attr-data");
-                    attrDataWrapper.innerHTML = `
+                    // Create attributes container if not exists
+                    if (!document.getElementById("attributes-container")) {
+                        const attrDataWrapper = document.createElement("div");
+                        attrDataWrapper.setAttribute(
+                            "class",
+                            "w-full flex flex-col items-start gap-4 pt-4"
+                        );
+                        attrDataWrapper.setAttribute("id", "attr-data");
+                        attrDataWrapper.innerHTML = `
                         <div class="w-full flex flex-col gap-4" id="attributes-container"></div>
                         ${val > 1 ? makeVariationBtnHtml : ""}
                        `;
 
-                    document
-                        .getElementById("attr-container")
-                        .append(attrDataWrapper);
-                }
+                        document
+                            .getElementById("attr-container")
+                            .append(attrDataWrapper);
+                    }
 
-                // Re-render the attribute rows
-                function RenderAttributesRows() {
-                    console.log(attributes_data);
-                    const container = document.getElementById(
-                        "attributes-container"
-                    );
-                    container.innerHTML = "";
-                    console.log(attributes_data);
-                    attributes_data.forEach((element, indx) => {
-                        const key = Object.keys(element)[0];
-                        const attrValuesHTML = element[key]
-                            .map(
-                                (val, num) => `
+                    // Re-render the attribute rows
+                    function RenderAttributesRows() {
+                        const container = document.getElementById(
+                            "attributes-container"
+                        );
+                        container.innerHTML = "";
+                        attributes_data.forEach((element, indx) => {
+                            const key = Object.keys(element)[0];
+                            const attrValuesHTML = element[key]
+                                .map(
+                                    (val, num) => `
                         <span class="bg-blue-700 px-3 py-2 text-sm themeFont text-white rounded-md flex items-center">
                             ${val}
                             <button class="ml-2 text-white hover:text-red-200 transition duration-200 attr-opts" type="button" btn-row-index="${indx}" btn-index="${num}">
@@ -152,15 +174,15 @@ if (productType) {
                                 </svg>
                             </button>
                         </span>`
-                            )
-                            .join("");
+                                )
+                                .join("");
 
-                        const attrElement = document.createElement("div");
-                        attrElement.setAttribute(
-                            "class",
-                            "w-full flex flex-col sm:flex-row border border-gray-200 rounded-md overflow-hidden attribute-row"
-                        );
-                        attrElement.innerHTML = `
+                            const attrElement = document.createElement("div");
+                            attrElement.setAttribute(
+                                "class",
+                                "w-full flex flex-col sm:flex-row border border-gray-200 rounded-md overflow-hidden attribute-row"
+                            );
+                            attrElement.innerHTML = `
                         <div class="w-full sm:w-1/3 bg-blue-700 p-4 flex items-center justify-between">
                             <h3 class="text-lg font-semibold themeFont text-white">${key}</h3>
                             <button class="remove-attr text-white hover:text-red-200 transition duration-200" type="button" del-row="${indx}">
@@ -172,141 +194,146 @@ if (productType) {
                         <div class="w-full sm:w-2/3 p-4 flex flex-wrap gap-2 items-center">
                             ${attrValuesHTML}
                         </div>`;
-                        container.append(attrElement);
-                    });
-                    let AttrInp = document.getElementById("attribute_data_inp");
-                    AttrInp.value = `${JSON.stringify(attributes_data)}`;
-                    console.log(AttrInp.value);
-                }
-                RenderAttributesRows();
-                // Clear inputs
-                attrTitle.value = "";
-                attrValues.value = "";
+                            container.append(attrElement);
+                        });
+                        let AttrInp =
+                            document.getElementById("attribute_data_inp");
+                        AttrInp.value = `${JSON.stringify(attributes_data)}`;
+                    }
+                    RenderAttributesRows();
+                    // Clear inputs
+                    attrTitle.value = "";
+                    attrValues.value = "";
 
-                // removing rows and option from attributes
-                document
-                    .getElementById("attributes-container")
-                    .addEventListener("click", function (e) {
-                        const removeBtn = e.target.closest(".remove-attr");
+                    // removing rows and option from attributes
+                    document
+                        .getElementById("attributes-container")
+                        .addEventListener("click", function (e) {
+                            const removeBtn = e.target.closest(".remove-attr");
 
-                        if (removeBtn) {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
+                            if (removeBtn) {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
 
-                            const idx = parseInt(
-                                removeBtn.getAttribute("del-row"),
-                                10
-                            );
+                                const idx = parseInt(
+                                    removeBtn.getAttribute("del-row"),
+                                    10
+                                );
 
-                            if (!isNaN(idx) && attributes_data[idx]) {
-                                attributes_data.splice(idx, 1);
-                                RenderAttributesRows();
-                            }
-                        }
-
-                        const removeOptBtn = e.target.closest(".attr-opts");
-
-                        if (removeOptBtn) {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-
-                            const rowIdx = parseInt(
-                                removeOptBtn.getAttribute("btn-row-index"),
-                                10
-                            );
-                            const optIndx = parseInt(
-                                removeOptBtn.getAttribute("btn-index"),
-                                10
-                            );
-
-                            if (
-                                !isNaN(rowIdx) &&
-                                attributes_data[rowIdx] &&
-                                !isNaN(optIndx)
-                            ) {
-                                let optVal = Object.values(
-                                    attributes_data[rowIdx]
-                                )[0];
-                                if (optVal[optIndx]) {
-                                    optVal.splice(optIndx, 1);
-                                    if (optVal.length == 0) {
-                                        attributes_data.splice(rowIdx, 1);
-                                    }
+                                if (!isNaN(idx) && attributes_data[idx]) {
+                                    attributes_data.splice(idx, 1);
                                     RenderAttributesRows();
                                 }
-                            } else {
-                                console.log("option is not present");
-                            }
-                        }
-                    }); // here closes
-
-                // removing rows and option from attributes ends here =======
-
-                if (val > 1) {
-                    let MakeVariation =
-                        document.getElementById("make-Variations");
-                    if (MakeVariation) {
-                        MakeVariation.addEventListener("click", (e) => {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-                            let VariationContainer = document.getElementById(
-                                "variation_container"
-                            );
-                            if (!VariationContainer) {
-                                let div = document.createElement("div");
-                                div.setAttribute(
-                                    "class",
-                                    "w-full flex flex-col gap-6 pt-4"
-                                );
-                                div.setAttribute("id", "variation_container");
-                                document
-                                    .getElementById("attr-container")
-                                    .append(div);
-                                VariationContainer = document.getElementById(
-                                    "variation_container"
-                                );
-                            }
-                            function generateVariationStrings(attributes) {
-                                const entries = attributes.map((attr) => {
-                                    const key = Object.keys(attr)[0]; // e.g., "size"
-                                    const values = attr[key]; // e.g., ["small", "medium", "large"]
-                                    return values.map((value) => ({
-                                        [key]: value,
-                                    })); // → [{ size: "small" }, { size: "medium" }, ...]
-                                });
-
-                                const combos = cartesianProduct(entries); // All possible combinations
-
-                                return combos.map((combination) => {
-                                    const merged = Object.assign(
-                                        {},
-                                        ...combination
-                                    ); // Merge: [{ size: "small" }, { color: "red" }] → { size: "small", color: "red" }
-                                    return Object.values(merged).join("-"); // Convert to string: "small-red"
-                                });
                             }
 
-                            function cartesianProduct(arr) {
-                                return arr.reduce(
-                                    (a, b) =>
-                                        a.flatMap((d) =>
-                                            b.map((e) => [...d, e])
-                                        ),
-                                    [[]]
+                            const removeOptBtn = e.target.closest(".attr-opts");
+
+                            if (removeOptBtn) {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+
+                                const rowIdx = parseInt(
+                                    removeOptBtn.getAttribute("btn-row-index"),
+                                    10
                                 );
+                                const optIndx = parseInt(
+                                    removeOptBtn.getAttribute("btn-index"),
+                                    10
+                                );
+
+                                if (
+                                    !isNaN(rowIdx) &&
+                                    attributes_data[rowIdx] &&
+                                    !isNaN(optIndx)
+                                ) {
+                                    let optVal = Object.values(
+                                        attributes_data[rowIdx]
+                                    )[0];
+                                    if (optVal[optIndx]) {
+                                        optVal.splice(optIndx, 1);
+                                        if (optVal.length == 0) {
+                                            attributes_data.splice(rowIdx, 1);
+                                        }
+                                        RenderAttributesRows();
+                                    }
+                                } else {
+                                    console.log("option is not present");
+                                }
                             }
-                            let combination =
-                                generateVariationStrings(attributes_data);
-                            console.log(VariationContainer);
-                            console.log(combination);
-                            combination.forEach((elem, idx) => {
-                                let div = document.createElement("div");
-                                div.setAttribute(
-                                    "class",
-                                    "w-full flex flex-col border border-gray-200 rounded-md overflow-hidden variation-box"
-                                );
-                                div.innerHTML = `
-                                 <div class="w-full bg-blue-700 p-4 flex items-center justify-between var-header" data-box='variation-box-${idx}' >
+                        }); // here closes
+
+                    // removing rows and option from attributes ends here =======
+
+                    if (val > 1) {
+                        let MakeVariation =
+                            document.getElementById("make-Variations");
+                        if (MakeVariation) {
+                            MakeVariation.addEventListener("click", (e) => {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                                let VariationContainer =
+                                    document.getElementById(
+                                        "variation_container"
+                                    );
+                                if (!VariationContainer) {
+                                    let div = document.createElement("div");
+                                    div.setAttribute(
+                                        "class",
+                                        "w-full flex flex-col gap-6 pt-4"
+                                    );
+                                    div.setAttribute(
+                                        "id",
+                                        "variation_container"
+                                    );
+                                    document
+                                        .getElementById("attr-container")
+                                        .append(div);
+                                    VariationContainer =
+                                        document.getElementById(
+                                            "variation_container"
+                                        );
+                                } else {
+                                    VariationContainer.innerHTML = "";
+                                }
+                                function generateVariationStrings(attributes) {
+                                    const entries = attributes.map((attr) => {
+                                        const key = Object.keys(attr)[0]; // e.g., "size"
+                                        const values = attr[key]; // e.g., ["small", "medium", "large"]
+                                        return values.map((value) => ({
+                                            [key]: value,
+                                        })); // → [{ size: "small" }, { size: "medium" }, ...]
+                                    });
+
+                                    const combos = cartesianProduct(entries); // All possible combinations
+
+                                    return combos.map((combination) => {
+                                        const merged = Object.assign(
+                                            {},
+                                            ...combination
+                                        ); // Merge: [{ size: "small" }, { color: "red" }] → { size: "small", color: "red" }
+                                        return Object.values(merged).join("-"); // Convert to string: "small-red"
+                                    });
+                                }
+
+                                function cartesianProduct(arr) {
+                                    return arr.reduce(
+                                        (a, b) =>
+                                            a.flatMap((d) =>
+                                                b.map((e) => [...d, e])
+                                            ),
+                                        [[]]
+                                    );
+                                }
+                                let combination =
+                                    generateVariationStrings(attributes_data);
+                                combination.forEach((elem, idx) => {
+                                    let div = document.createElement("div");
+                                    div.setAttribute(
+                                        "class",
+                                        "w-full flex flex-col border border-gray-200 rounded-md overflow-hidden variation-box"
+                                    );
+                                    div.innerHTML = `
+                                 <div class="w-full bg-blue-700 p-4 flex items-center justify-between var-header cursor-pointer" data-box='variation-box-${idx}' >
                                     <h3 class="text-lg font-semibold themeFont text-white capitalize">${elem}</h3>
                                     <button class="text-white hover:text-red-200 transition duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -326,7 +353,8 @@ if (productType) {
                                                 <span class="text-red-500 ml-1">*</span>
                                             </label>
                                             <input type="text" placeholder="Enter price per feet"
-                                                class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-md numberInp themeFont focus:ring-blue-500 focus:border-blue-500">
+                                                class="w-full px-4 py-3 mt-2 border border-gray-300 
+                                                rounded-md numberInp themeFont focus:ring-blue-500 focus:border-blue-500 var_per_feet">
                                         </div>
 
                                         <div class="flex flex-col">
@@ -335,7 +363,8 @@ if (productType) {
                                                 <span class="text-red-500 ml-1">*</span>
                                             </label>
                                             <input type="text" placeholder="Enter price per roll"
-                                                class="w-full px-4 py-3 mt-2 border border-gray-300 themeFont numberInp rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                                class="w-full px-4 py-3 mt-2 border border-gray-300
+                                                 themeFont numberInp rounded-md focus:ring-blue-500 focus:border-blue-500 var_per_roll">
                                         </div>
                                     </div>
 
@@ -347,7 +376,8 @@ if (productType) {
                                                 <span class="text-red-500 ml-1">*</span>
                                             </label>
                                             <input type="text" placeholder="Enter wholesale price per feet"
-                                                class="w-full px-4 py-3 mt-2 border border-gray-300 themeFont numberInp rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                                class="w-full px-4 py-3 mt-2 border border-gray-300 themeFont 
+                                                numberInp rounded-md focus:ring-blue-500 focus:border-blue-500 var_per_retail">
                                         </div>
 
                                         <div class="flex flex-col">
@@ -356,7 +386,8 @@ if (productType) {
                                                 <span class="text-red-500 ml-1">*</span>
                                             </label>
                                             <input type="text" placeholder="Enter wholesale price per roll"
-                                                class="w-full px-4 py-3 mt-2 border border-gray-300 themeFont numberInp rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                                class="w-full px-4 py-3 mt-2 border border-gray-300 themeFont 
+                                                numberInp rounded-md focus:ring-blue-500 focus:border-blue-500 var_per_wholesale">
                                         </div>
                                     </div>
 
@@ -367,40 +398,220 @@ if (productType) {
                                             <span class="text-red-500 ml-1">*</span>
                                         </label>
                                         <input type="text" placeholder="Enter available quantity for this variation"
-                                            class="w-full px-4 py-3 mt-2 themeFont border border-gray-300 rounded-md numberInp focus:ring-blue-500 focus:border-blue-500">
+                                            class="w-full px-4 py-3 mt-2 themeFont border 
+                                            border-gray-300 rounded-md numberInp focus:ring-blue-500 focus:border-blue-500 var_per_stock">
                                     </div>
                                 </div>
+                               
                                 `;
-                                VariationContainer.append(div);
-                            });
-                            let varHead =
-                                document.getElementsByClassName("var-header");
-                            Array.from(varHead).forEach((item) => {
-                                item.addEventListener("click", function (e) {
-                                    e.preventDefault();
-                                    e.stopImmediatePropagation();
-
-                                    let parent = this.closest(".variation-box");
-                                    varBody = parent.querySelector(".var-body");
-                                    varBody.classList.toggle("hidden");
+                                    VariationContainer.append(div);
                                 });
-                            });
-                            let NumberInp = Array.from(
-                                document.getElementsByClassName("numberInp")
-                            );
-                            NumberInp.forEach((itm) => {
-                                itm.addEventListener("input", (e) => {
-                                    // Replace any non-digit characters with an empty string
-                                    e.target.value = e.target.value.replace(
-                                        /\D/g,
-                                        ""
+                                VariationContainer.append(
+                                    Object.assign(
+                                        document.createElement("button"),
+                                        {
+                                            className:
+                                                "bg-[#1447e6] text-white p-3 px-4 rounded-md themeFont text-lg hover:bg-blue-600 ease-linear duration-200 cursor-pointer",
+                                            id: "saveVariations",
+                                            textContent: "Save Variations", // optional
+                                        }
+                                    )
+                                );
+
+                                // ======================================
+
+                                function errorCreation(parent) {
+                                    parent.append(
+                                        Object.assign(
+                                            document.createElement("p"),
+                                            {
+                                                className:
+                                                    "text-sm themeFont text-red-400 var-error mt-1",
+                                                textContent:
+                                                    "This field must be filled in order to save variations",
+                                            }
+                                        )
+                                    );
+                                }
+
+                                function errorReduction(parent) {
+                                    const errorElement =
+                                        parent.querySelector(".var-error");
+                                    if (errorElement) {
+                                        errorElement.remove();
+                                    }
+                                }
+
+                                // ==============================
+
+                                let varHead =
+                                    document.getElementsByClassName(
+                                        "var-header"
+                                    );
+
+                                Array.from(varHead).forEach((item) => {
+                                    item.addEventListener(
+                                        "click",
+                                        function (e) {
+                                            e.preventDefault();
+                                            e.stopImmediatePropagation();
+
+                                            let parent =
+                                                this.closest(".variation-box");
+                                            let varBody =
+                                                parent.querySelector(
+                                                    ".var-body"
+                                                );
+                                            varBody.classList.toggle("hidden");
+                                        }
                                     );
                                 });
+
+                                let saveVariations =
+                                    document.getElementById("saveVariations");
+                                let variationDataInp =
+                                    document.getElementById(
+                                        "variation_data_inp"
+                                    );
+
+                                // DRY Helper: Validate input field and show/remove error
+                                function validateInputField(input) {
+                                    const parent = input.parentElement;
+                                    if (input.value.trim() === "") {
+                                        errorCreation(parent);
+                                        return false;
+                                    } else {
+                                        errorReduction(parent);
+                                        return true;
+                                    }
+                                }
+
+                                saveVariations.addEventListener(
+                                    "click",
+                                    (e) => {
+                                        e.preventDefault();
+                                        e.stopImmediatePropagation();
+
+                                        // ==============================================
+                                        let var_per_feet =
+                                            document.getElementsByClassName(
+                                                "var_per_feet"
+                                            );
+                                        let var_per_roll =
+                                            document.getElementsByClassName(
+                                                "var_per_roll"
+                                            );
+                                        let var_per_retail =
+                                            document.getElementsByClassName(
+                                                "var_per_retail"
+                                            );
+                                        let var_per_wholesale =
+                                            document.getElementsByClassName(
+                                                "var_per_wholesale"
+                                            );
+                                        let var_per_stock =
+                                            document.getElementsByClassName(
+                                                "var_per_stock"
+                                            );
+
+                                        // ==============================================
+                                        let variation_data = [];
+
+                                        if (!Array.isArray(combination)) {
+                                            console.error(
+                                                "Missing 'combination' array"
+                                            );
+                                            return;
+                                        }
+
+                                        combination.forEach((item, indx) => {
+                                            const fields = {
+                                                variation_per_feet:
+                                                    var_per_feet[indx],
+                                                variation_per_roll:
+                                                    var_per_roll[indx],
+                                                variation_per_retail:
+                                                    var_per_retail[indx],
+                                                variation_per_wholesale:
+                                                    var_per_wholesale[indx],
+                                                var_per_stock:
+                                                    var_per_stock[indx],
+                                            };
+
+                                            let allValid = true;
+
+                                            for (let key in fields) {
+                                                if (
+                                                    !validateInputField(
+                                                        fields[key]
+                                                    )
+                                                ) {
+                                                    allValid = false;
+                                                }
+                                            }
+
+                                            if (allValid) {
+                                                variation_data.push({
+                                                    [item]: {
+                                                        variation_per_feet:
+                                                            fields
+                                                                .variation_per_feet
+                                                                .value,
+                                                        variation_per_roll:
+                                                            fields
+                                                                .variation_per_roll
+                                                                .value,
+                                                        variation_per_retail:
+                                                            fields
+                                                                .variation_per_retail
+                                                                .value,
+                                                        variation_per_wholesale:
+                                                            fields
+                                                                .variation_per_wholesale
+                                                                .value,
+                                                        var_per_stock:
+                                                            fields.var_per_stock
+                                                                .value,
+                                                    },
+                                                });
+                                            }
+                                        });
+                                        if (variation_data.length > 0) {
+                                            variationDataInp.value =
+                                                JSON.stringify(variation_data);
+                                            console.log(variationDataInp.value);
+                                        }
+                                    }
+                                );
+
+                                let NumberInp = Array.from(
+                                    document.getElementsByClassName("numberInp")
+                                );
+                                NumberInp.forEach((itm) => {
+                                    itm.addEventListener("input", (e) => {
+                                        let val = e.target.value;
+
+                                        // Allow only digits and one decimal point, and limit to 2 decimal places
+                                        val = val.replace(/[^0-9.]/g, ""); // Remove non-numeric except .
+                                        val = val.replace(
+                                            /^(\d*\.\d{0,2})\d*$/,
+                                            "$1"
+                                        ); // Allow max 2 decimal places
+
+                                        // Prevent multiple decimal points
+                                        const parts = val.split(".");
+                                        if (parts.length > 2) {
+                                            val = parts[0] + "." + parts[1]; // Keep only the first decimal
+                                        }
+
+                                        e.target.value = val;
+                                    });
+                                });
                             });
-                        });
+                        }
                     }
-                }
+                });
             });
         });
-    });
-}
+    }
+});

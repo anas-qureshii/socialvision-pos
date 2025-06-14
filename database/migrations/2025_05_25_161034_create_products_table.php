@@ -30,9 +30,11 @@ return new class extends Migration
             $table->text('description')->nullable(); // use text for longer content
 
             $table->string('product_type')->default('simple');
-
+            
             $table->json('attributes')->nullable();  // FIX: correct JSON column type
             $table->json('variations')->nullable();  // FIX: correct JSON column type
+            
+            
 
             $table->timestamps();
         });

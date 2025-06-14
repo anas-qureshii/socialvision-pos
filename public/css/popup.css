@@ -1,0 +1,98 @@
+    /* Overlay background */
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      /* Base overlay style */
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeInOverlay 0.3s ease forwards;
+      }
+
+      /* Popup box with animation */
+      .popup-box {
+        background: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        animation: slideFadeIn 0.3s ease forwards;
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      /* Scrollable content */
+      .popup-content {
+        overflow-y: auto;
+        margin-top: 1rem;
+        padding-right: 10px;
+        flex-grow: 1;
+      }
+
+      /* Close button */
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: #ff4d4d;
+        border: none;
+        color: white;
+        padding: 0.4rem 0.7rem;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 5px;
+      }
+
+      /* Nested popup overlay without double-dark */
+      .popup-overlay.nested {
+        background: transparent;
+        z-index: 1100;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .popup-box {
+          width: 95%;
+          max-height: 85vh;
+          padding: 1rem;
+        }
+      }
+
+      /* === Animations === */
+      @keyframes fadeInOverlay {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideFadeIn {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }

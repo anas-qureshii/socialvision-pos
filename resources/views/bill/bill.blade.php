@@ -13,99 +13,110 @@
         <h2 class="themeFont text-3xl capitalize mt-4 font-semibold px-2 ">Generate Bill</h2>
         <div class="w-full py-6 mt-6 border-t border-t-gray-100 flex flex-wrap justify-between">
 
-           <div class="w-[60%] flex flex-col gap-4">
-            <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
-                <button class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize cursor-pointer" id="selectUser">
-                     select users
-                </button>
+            <div class="w-[60%] flex flex-col gap-4">
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
+                    <button
+                        class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize cursor-pointer"
+                        id="selectUser">
+                        select users
+                    </button>
 
-                <div class="w-full px-4 relative">
-                    <div class="w-full  flex-col gap-2 absolute bg-white rounded overflow-hidden top-[5px] left-0 p-2 z-12 hidden" id="cus_inp">
-                        <div class="w-full flex">
-                         <input type="search" name="" placeholder="Search Users Here" class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize" id="">
-                        </div>
-                        <div class="w-full flex flex-col gap-2 max-h-[190px] overflow-x-auto">
-     
-                             @for ($xy = 0;$xy < 4;$xy++)
-                             <button class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize cursor-pointer gap-2 hover:bg-blue-700 hover:text-white">Muhammad Furqan <span class="text-[10px] themeFont">(03133889331)</span></button>
-     
-                             @endfor
-     
-                        </div>
-                       
-                     </div>
-                </div>
+                    <div class="w-full px-4 relative">
+                        <div class="w-full  flex-col gap-2 absolute bg-white rounded overflow-hidden top-[5px] left-0 p-2 z-12 hidden"
+                            id="cus_inp">
+                            <div class="w-full flex">
+                                <input type="search" name="" placeholder="Search Users Here"
+                                    class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize"
+                                    id="">
+                            </div>
+                            <div class="w-full flex flex-col gap-2 max-h-[190px] overflow-x-auto">
 
-                 {{-- select users here --}}
- 
-                 <div class="w-full bg-blue-700 rounded text-white p-4 flex mt-2 pr-10 relative">
-                    <h2 class="themeFont">Muhammad Anas</h2>
-                    <button class="w-6 h-6 bg-red-500 rounded material-icons material-symbols-rounded !text-[16px] cursor-pointer absolute top-[50%] -translate-y-1/2 right-2">close</button>
+                                @for ($xy = 0; $xy < 4; $xy++)
+                                    <button
+                                        class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize cursor-pointer gap-2 hover:bg-blue-700 hover:text-white">Muhammad
+                                        Furqan <span class="text-[10px] themeFont">(03133889331)</span></button>
+                                @endfor
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- select users here --}}
+
+                    <div class="w-full bg-blue-700 rounded text-white p-4 flex mt-2 pr-10 relative">
+                        <h2 class="themeFont">Muhammad Anas</h2>
+                        <button
+                            class="w-6 h-6 bg-red-500 rounded material-icons material-symbols-rounded !text-[16px] cursor-pointer absolute top-[50%] -translate-y-1/2 right-2">close</button>
+                    </div>
+
                 </div>
-               
-             </div>
-             <div class="w-full flex flex-wrap justify-between mt-2 px-4">
-                <div class="w-full rounded border border-blue-600 px-4 py-2 bg-blue-100 themeFont flex items-center justify-between">
-                     <span>Add items</span>
-                     <button class="px-3 py-2 rounded bg-blue-700 text-white cursor-pointer" id="addItems">Add</button>
- 
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4">
+                    <div
+                        class="w-full rounded border border-blue-600 px-4 py-2 bg-blue-100 themeFont flex items-center justify-between">
+                        <span>Add items</span>
+                        <button class="px-3 py-2 rounded bg-blue-700 text-white cursor-pointer" id="addItems">Add</button>
+
+                    </div>
+
                 </div>
-               
-             </div>
-             <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
-                <input type="text" placeholder="Amount Deposit" 
-                class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize">
-             </div>
-             <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
-                <input type="text" placeholder="Order discount in %" class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize">
-             </div>
-             <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
-                 <select name="" id="parent_category"
-                 class='w-full p-4  bg-blue-100 rounded themeFont text-gray-600 border border-transparent outline-0 text-lg focus:border-[#1447e6]'>
-                    <option value="">payment options</option>
-                    <option value="category">on Cash</option>
-                    <option value="category">on Credit</option>
-                    <option value="category">on Debit</option>
-                </select>
-             </div>
-             <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
-                 <select name="" id="parent_category"
-                 class='w-full p-4  bg-blue-100 rounded themeFont text-gray-600 border border-transparent outline-0 text-lg focus:border-[#1447e6]'>
-                    <option value="">Remaining</option>
-                    <option value="category">Return</option>
-                    <option value="category">Debit</option>
-                </select>
-             </div>
-             <div class="w-full p-2">
-                <button class="px-3 py-4 bg-blue-700 text-white themeFont rounded">
-                    Generate Bill
-                </button>
-             </div>
-           </div>
-            
-           <div class="w-[39%] flex flex-col ">
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
+                    <input type="text" placeholder="Amount Deposit"
+                        class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize">
+                </div>
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
+                    <input type="text" placeholder="Order discount in %"
+                        class="w-full rounded border border-blue-600 p-4 flex items-center bg-blue-100 themeFont capitalize">
+                </div>
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
+                    <select name="" id="parent_category"
+                        class='w-full p-4  bg-blue-100 rounded themeFont text-gray-600 border border-transparent outline-0 text-lg focus:border-[#1447e6]'>
+                        <option value="">payment options</option>
+                        <option value="category">on Cash</option>
+                        <option value="category">on Credit</option>
+                        <option value="category">on Debit</option>
+                    </select>
+                </div>
+                <div class="w-full flex flex-wrap justify-between mt-2 px-4 ">
+                    <select name="" id="parent_category"
+                        class='w-full p-4  bg-blue-100 rounded themeFont text-gray-600 border border-transparent outline-0 text-lg focus:border-[#1447e6]'>
+                        <option value="">Remaining</option>
+                        <option value="category">Return</option>
+                        <option value="category">Debit</option>
+                    </select>
+                </div>
+                <div class="w-full p-2">
+                    <button class="px-3 py-4 bg-blue-700 text-white themeFont rounded">
+                        Generate Bill
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-[39%] flex flex-col ">
                 <div class="w-full px-2 py-3 rounded bg-gray-100">
-                    <h2 class="themeFont text-3xl font-semibold capitalize pb-3 border-b border-dashed border-gray-200">Bill summary</h2>
+                    <h2 class="themeFont text-3xl font-semibold capitalize pb-3 border-b border-dashed border-gray-200">Bill
+                        summary</h2>
                     <div class="flex flex-col gap-2 py-3 border-b border-dashed border-gray-200">
                         <h4 class="themeFont mt-2 text-xl"> <b>Name :</b> Muhammad Furqan</h4>
                         <h4 class="themeFont"><b>Phone :</b> 03133889331</h4>
                         <h4 class="themeFont"><b>Email :</b> furqanahmed@gmail.com</h4>
                     </div>
-                    
+
                     <div class="flex flex-col w-full mt-4 gap-2">
-                      
-                        @for ($x=0;$x < 1;$x++)
-                        <div class="w-full flex flex-wrap py-2 border-b border-dashed border-gray-300">
-                            <div class="w-[68%] flex items-center">
-                                <h2 class="themeFont text-lg">Top digitals locks for rooms <b class="text-gray-500"> x 3</b> </h2>
+
+                        @for ($x = 0; $x < 1; $x++)
+                            <div class="w-full flex flex-wrap py-2 border-b border-dashed border-gray-300">
+                                <div class="w-[68%] flex items-center">
+                                    <h2 class="themeFont text-lg">Top digitals locks for rooms <b class="text-gray-500"> x
+                                            3</b> </h2>
+                                </div>
+                                <div class="w-[30%] flex justify-center">
+                                    <h2 class="font-semibold themeFont text-lg">7700.Rs</h2>
+                                </div>
                             </div>
-                            <div class="w-[30%] flex justify-center">
-                                <h2 class="font-semibold themeFont text-lg">7700.Rs</h2>
-                            </div>
-                        </div>
                         @endfor
-                        
-                      
+
+
                     </div>
 
                     <div class="w-full flex flex-col gap-2 mt-6">
@@ -143,18 +154,18 @@
                         </div>
                     </div>
                 </div>
-           </div>
-        
+            </div>
+
 
 
         </div>
-
     @endsection
 
     @section('popup')
         <div class="bg-black opacity-20 fixed top-0 left-0 z-10 w-full h-screen  hidden" id="overlay"></div>
-    
-        <div class="w-[800px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 z-12 fixed top-1/2 left-1/2 -translate-1/2 overflow-y-auto hidden" id="items_area">
+
+        <div class="w-[800px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 z-12 fixed top-1/2 left-1/2 -translate-1/2 overflow-y-auto hidden"
+            id="items_area">
             <h4 class="themeFont text-2xl font-semibold sticky top-0 bg-white z-10">Add Products</h4>
             <input type="search" class="w-full p-4 rounded themeFont text-gray-600 border border-[#1447e6] outline-0"
                 name="" id="" placeholder="Search for products...">
@@ -303,9 +314,9 @@
                 </div>
             </div>
         </div>
-        @endsection 
+    @endsection
 
-{{-- 
+    {{-- 
     @push('scripts')
     <script>
         window.addEventListener('load', () => {
