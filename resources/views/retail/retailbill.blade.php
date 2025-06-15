@@ -177,14 +177,15 @@
 @section('popup')
     <div class="w-full fixed top-0 left-0 h-screen bg-black/25 flex items-center justify-center z-100 overflow-hidden hidden"
         id="items_pop">
-        <div class="w-[800px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto relative">
+        <div class="w-[1000px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto relative">
 
             {{-- close btn here --}}
 
             <a href="javascript:void(0)" parent-id='items_pop'
                 class="close-btn w-6 h-6 bg-red-600 text-white absolute top-6 
                 right-6 -translate-y-1/2 translate-x-1/2 z-11 rounded-full flex items-center  justify-center">
-                <span class="material-icons material-symbols-rounded !text-[14px]"> close </span></a>
+                <span class="material-icons material-symbols-rounded !text-[14px]"> close </span>
+            </a>
             {{-- close btn ends here and heading start here --}}
             <h4
                 class="themeFont text-2xl font-semibold sticky top-0 bg-white z-10 w-full flex justify-between items-center">
@@ -192,28 +193,43 @@
 
             </h4>
             {{--  heading ends here --}}
-            <input type="search" class="w-full p-4 rounded themeFont text-gray-600 border border-[#1447e6] outline-0"
-                name="" id="" placeholder="Search for products...">
+            <div class="w-full flex flex-col gap-1" id="search__inp__parent">
+                <input type="search"
+                    class="w-full p-4 rounded themeFont text-gray-600 border border-gray-200 focus:border-[#1447e6] outline-0"
+                    name="" id="search__product__inp" placeholder="Search for products...">
+                <div class="hidden p-3 mb-2 mt-1 text-[12px] themeFont text-yellow-600 rounded bg-yellow-100 dark:bg-gray-800 dark:text-yellow-300"
+                    role="alert" id="search__error_alert">
+                    search query must contains more than 3 letters .
+                </div>
+                <div class="hidden p-4 mb-4 text-sm text-green-800 rounded-lg duration-500 ease-linear bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                    role="alert" id="search__success_alert">
+                     
+                </div>
+            </div>
             <input type="hidden" name="">
             <div class="flex flex-col w-full gap-2 items-center">
 
-                {{--  Input data storer here --}}
-                {{--  Input data storer ends here --}}
 
-                {{-- <div class="w-full overflow-x-auto"> --}}
-                {{-- table ends here --}}
 
-                <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
+
+
+
+                {{-- loader here --}}
+
+                <div class="w-full flex items-center justify-center py-6 hidden" id="search_loader">
+                    <div class="w-6 h-6 border-4 border-t-[#1447e6] border-gray-200 rounded-full animate-spin">
+                    </div>
+                </div>
+
+                {{-- loader ends here --}}
+
+                <div class="w-full overflow-x-auto rounded-lg border border-gray-200 hidden" id="search_results_table">
                     <table class="min-w-full divide-y divide-gray-200 whitespace-nowrap">
                         <thead class="bg-gray-50 themeFont">
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Sno
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Image
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -237,22 +253,21 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Options
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Action
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 themeFont">
+                        <tbody class="bg-white divide-y divide-gray-200 themeFont" id="search_results_body">
+
                             <!-- Sample product row (similar to your image) -->
-                            @for ($i = 0; $i < 1; $i++)
+                            @for ($i = 0; $i < 0; $i++)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $i + 1 }}
-                                        <input type="hidden" name="" value="[]" id="tr1-attributes">
-                                        <input type="hidden" name="" value="[]" id="tr2-variations">
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <img src="{{ asset('assets/products/p-' . ($i + 1) . '.webp') }}" alt="Product"
-                                            class="w-12 h-12 object-cover rounded">
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900">Shanty Cotton Seat</div>
@@ -265,18 +280,25 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <input type="text"
-                                            class="outline-none border border-gray-200 focus:border-[#1447e6] p-2 text-sm themeFont"
-                                            placeholder="Enter Quantity Here">
+                                            class="outline-none border border-gray-200 focus:border-[#1447e6] p-2 text-sm themeFont w-12">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="p-price">
+                                        1000pkr
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        1000pkr
+                                        <div class="options flex flex-wrap gap-1">
+                                            -
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex space-x-2">
                                             <button type="button" p-type='simple' product-id='1'
-                                                class="bg-[#1447e6] text-white p-2 rounded-md 
+                                                class="sel-p-btn bg-[#1447e6] text-white p-2 rounded-md 
                                                 themeFont text-sm hover:bg-blue-600 ease-linear 
-                                                duration-200 cursor-pointer select-billing-product">
+                                                duration-200 cursor-pointer select-billing-product flex gap-1 items-center">
+                                                <div
+                                                    class="w-3 h-3 border-2 border-dashed rounded-full animate-spin border-white hidden">
+                                                </div>
                                                 select
                                             </button>
                                         </div>
@@ -290,18 +312,7 @@
 
 
                 {{-- table ends here --}}
-                {{-- <div class="flex flex-wrap justify-between p-2">
-                        <div class="w-[50%] flex gap-2 items-center">
-                            <p class="themeFont text-sm">showing 10 out <span>200</span> products</p>
-                        </div>
-                        <div class="w-[50%] flex justify-end gap-2">
-                            <button
-                                class="bg-blue-700 text-white text-sm p-2 rounded cursor-pointer themeFont capitalize">previous</button>
-                            <button
-                                class="bg-blue-700 text-white text-sm p-2 rounded cursor-pointer themeFont capitalize">Next</button>
-                        </div>
-                    </div> --}}
-                {{-- </div> --}}
+
             </div>
         </div>
     </div>
@@ -309,9 +320,13 @@
     {{-- nested popup here --}}
 
     <div class="w-full fixed top-0 left-0 h-screen bg-black/10 flex items-center justify-center z-110 overflow-hidden hidden"
-        id="nested-popup" id="nested_pop">
-        <div class="w-[400px] max-h-[40vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto">
-
+        id="nested_popup">
+        <div class="w-[400px] max-h-[40vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto relative">
+            <a href="javascript:void(0)" parent-id='nested_popup'
+                class="close-btn w-6 h-6 bg-red-600 text-white absolute top-6 
+                right-6 -translate-y-1/2 translate-x-1/2 z-11 rounded-full flex items-center  justify-center">
+                <span class="material-icons material-symbols-rounded !text-[14px]"> close </span>
+            </a>
             <h2>Hello</h2>
 
 
@@ -325,5 +340,5 @@
 
 
 @push('scripts')
-<script src="{{asset('js/billing.js')}}"></script>
+<script src="{{ asset('js/billing.js') }}"></script>
 @endpush
