@@ -10,4 +10,6 @@ use App\Http\Middleware\ApiAuthMiddleware;
 
 Route::middleware([ApiAuthMiddleware::class])->group(function(){
     Route::post('/product/search/{search}',[ProductController::class,'searchProduct']);
+    Route::post('/product/addproduct/{id}',[ProductController::class,'addProduct']);
+    Route::get('/product/show/{id}',[ProductController::class,'show']);
 });

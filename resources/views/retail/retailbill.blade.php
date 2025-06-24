@@ -177,7 +177,7 @@
 @section('popup')
     <div class="w-full fixed top-0 left-0 h-screen bg-black/25 flex items-center justify-center z-100 overflow-hidden hidden"
         id="items_pop">
-        <div class="w-[1000px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto relative">
+        <div class="w-[1000px] max-h-[90vh] bg-white flex flex-col gap-4 rounded-lg p-4 pt-0 overflow-y-auto relative">
 
             {{-- close btn here --}}
 
@@ -188,7 +188,7 @@
             </a>
             {{-- close btn ends here and heading start here --}}
             <h4
-                class="themeFont text-2xl font-semibold sticky top-0 bg-white z-10 w-full flex justify-between items-center">
+                class="themeFont text-2xl pt-4 font-semibold sticky top-0 bg-white z-10 w-full flex justify-between items-center">
                 Add Products
 
             </h4>
@@ -203,7 +203,7 @@
                 </div>
                 <div class="hidden p-4 mb-4 text-sm text-green-800 rounded-lg duration-500 ease-linear bg-green-50 dark:bg-gray-800 dark:text-green-400"
                     role="alert" id="search__success_alert">
-                     
+
                 </div>
             </div>
             <input type="hidden" name="">
@@ -253,7 +253,15 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Options
+                                    Roll Price
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    custom price
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Item unit
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -321,13 +329,129 @@
 
     <div class="w-full fixed top-0 left-0 h-screen bg-black/10 flex items-center justify-center z-110 overflow-hidden hidden"
         id="nested_popup">
-        <div class="w-[400px] max-h-[40vh] bg-white flex flex-col gap-4 rounded-lg p-4 overflow-y-auto relative">
+        <div class="w-[400px] max-h-[70vh] bg-white flex flex-col gap-2 rounded-lg p-4 overflow-y-auto relative" id="nested_pop_box">
+            {{-- nested popup close btn --}}
             <a href="javascript:void(0)" parent-id='nested_popup'
                 class="close-btn w-6 h-6 bg-red-600 text-white absolute top-6 
                 right-6 -translate-y-1/2 translate-x-1/2 z-11 rounded-full flex items-center  justify-center">
                 <span class="material-icons material-symbols-rounded !text-[14px]"> close </span>
             </a>
-            <h2>Hello</h2>
+            {{-- <div class="w-full flex flex-col gap-3 p-1">
+                <p class="text-[16px] themeFont">color</p>
+                <label for="color_radio_btn_1"
+                    class="w-full px-2 py-3 rounded-xl border-2 border-gray-300 flex gap-3 capitalize items-center cursor-pointer transition-all duration-300
+                before:w-5 before:h-5 before:border-2 before:border-gray-300 before:rounded-full before:transition-all before:duration-300">
+                    <input type="radio" name="color" value="red" class="customize_radio_btn"
+                        id="color_radio_btn_1" hidden>
+                    <span class="text-[16px] themeFont">red</span>
+                </label>
+                <label for="color_radio_btn_2"
+                    class="w-full px-2 py-3 rounded-xl border-2 border-gray-300 capitalize flex gap-3 items-center cursor-pointer transition-all duration-300
+                before:w-5 before:h-5 before:border-2 before:border-gray-300 before:rounded-full before:transition-all before:duration-300">
+                    <input type="radio" name="color" value="green" class="customize_radio_btn"
+                        id="color_radio_btn_2" hidden>
+                    <span class="text-[16px] themeFont">green</span>
+                </label>
+            </div>
+            <div class="w-full flex flex-col gap-3 p-1">
+                <p class="text-[16px] themeFont">size</p>
+                <label for="size_radio_btn"
+                    class="w-full px-2 py-3 rounded-xl border-2 border-gray-300 flex gap-3 items-center cursor-pointer transition-all duration-300
+                before:w-5 before:h-5 before:border-2 before:border-gray-300 before:rounded-full before:transition-all before:duration-300">
+                    <input type="radio" name="size" value="small" class="customize_radio_btn" id="size_radio_btn"
+                        hidden>
+                    <span class="text-[16px] themeFont">small</span>
+                </label>
+                <label for="size_radio_btn_2"
+                    class="w-full px-2 py-3 rounded-xl border-2 border-gray-300 flex gap-3 items-center cursor-pointer transition-all duration-300
+                before:w-5 before:h-5 before:border-2 before:border-gray-300 before:rounded-full before:transition-all before:duration-300">
+                    <input type="radio" name="size" value="medium" class="customize_radio_btn"
+                        id="size_radio_btn_2" hidden>
+                    <span class="text-[16px] themeFont">Medium</span>
+                </label>
+            </div>
+            <div class="w-full flex flex-col gap-3 p-1">
+              
+
+            </div> --}}
+
+           
+
+            {{-- <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4 pl-3 relative">
+                    <span class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-5 bg-primary rounded-sm"></span>
+                    Size
+                </h3>
+
+                <div class="space-y-3">
+                    <div class="relative cursor-pointer group">
+                        <input type="radio" id="small" name="size" value="small"
+                            class="absolute opacity-0 peer">
+                        <label for="small"
+                            class="flex items-center p-4 bg-gray-50 border-2 border-gray-200 rounded-2xl transition-all duration-300 cursor-pointer hover:border-primary hover:translate-x-1 hover:shadow-lg hover:shadow-primary/15 peer-checked:checked-style">
+                            <div
+                                class="w-6 h-6 border-2 border-gray-300 rounded-full mr-4 flex-shrink-0 relative radio-custom transition-all duration-300 peer-checked:border-white peer-checked:bg-white/20 peer-checked:radio-checked group-hover:border-primary group-hover:bg-primary/10">
+                            </div>
+                            <span class="text-base font-medium relative z-10">Small Size</span>
+                        </label>
+                    </div>
+
+                    <div class="relative cursor-pointer group">
+                        <input type="radio" id="large" name="size" value="large"
+                            class="absolute opacity-0 peer">
+                        <label for="large"
+                            class="flex items-center p-4 bg-gray-50 border-2 border-gray-200 rounded-2xl transition-all duration-300 cursor-pointer hover:border-primary hover:translate-x-1 hover:shadow-lg hover:shadow-primary/15 peer-checked:checked-style">
+                            <div
+                                class="w-6 h-6 border-2 border-gray-300 rounded-full mr-4 flex-shrink-0 relative radio-custom transition-all duration-300 peer-checked:border-white peer-checked:bg-white/20 peer-checked:radio-checked group-hover:border-primary group-hover:bg-primary/10">
+                            </div>
+                            <span class="text-base font-medium relative z-10">Large Size</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="h-px gradient-divider my-6"></div>
+
+            <!-- Colors Section -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4 pl-3 relative">
+                    <span class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-5 bg-primary rounded-sm"></span>
+                    Colors
+                </h3>
+
+                <div class="space-y-3">
+                    <div class="relative cursor-pointer group">
+                        <input type="radio" id="yellow" name="color" value="yellow"
+                            class="absolute opacity-0 peer">
+                        <label for="yellow"
+                            class="flex items-center p-4 bg-gray-50 border-2 border-gray-200 rounded-2xl transition-all duration-300 cursor-pointer hover:border-primary hover:translate-x-1 hover:shadow-lg hover:shadow-primary/15 peer-checked:checked-style">
+                            <div
+                                class="w-6 h-6 border-2 border-gray-300 rounded-full mr-4 flex-shrink-0 relative radio-custom transition-all duration-300 peer-checked:border-white peer-checked:bg-white/20 peer-checked:radio-checked group-hover:border-primary group-hover:bg-primary/10">
+                            </div>
+                            <span class="text-base font-medium relative z-10">Yellow Color</span>
+                        </label>
+                    </div>
+
+                    <div class="relative cursor-pointer group">
+                        <input type="radio" id="blue" name="color" value="blue"
+                            class="absolute opacity-0 peer">
+                        <label for="blue"
+                            class="flex items-center p-4 bg-gray-50 border-2 border-gray-200 rounded-2xl transition-all duration-300 cursor-pointer hover:border-primary hover:translate-x-1 hover:shadow-lg hover:shadow-primary/15 peer-checked:checked-style">
+                            <div
+                                class="w-6 h-6 border-2 border-gray-300 rounded-full mr-4 flex-shrink-0 relative radio-custom transition-all duration-300 peer-checked:border-white peer-checked:bg-white/20 peer-checked:radio-checked group-hover:border-primary group-hover:bg-primary/10">
+                            </div>
+                            <span class="text-base font-medium relative z-10">Blue Color</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Button -->
+            <button type="submit"
+                class="w-full py-4 px-6 bg-blue-700 text-white font-semibold rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 active:translate-y-0 relative overflow-hidden shimmer">
+                Done
+            </button> --}}
 
 
         </div>
@@ -340,5 +464,6 @@
 
 
 @push('scripts')
+
 <script src="{{ asset('js/billing.js') }}"></script>
 @endpush
